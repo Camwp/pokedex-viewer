@@ -1,13 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pokémon Pokédex Viewer - browse Pokémon data, stats, and images.">
+  <title>Pokémon Pokédex Viewer</title>
+  <link rel="stylesheet" href="/style/main.css">
+  <link rel="icon" href="/assets/images/pokeball.png">
+</head>
+
+<body>
+  <header>
+    <h1>Pokémon Pokédex Viewer</h1>
+  </header>
+  <div class="layout">
+
+    <nav class="sidebar">
+      <a href="#" id="homeLink" class="active">Home</a>
+      <hr width="100%" id="navBreak">
+      <a href="#" id="listLink">All Pokémon</a>
+
+    </nav>
+
+    <div class="main-content">
+      <main>
+        <section class="search-section">
+          <input type="text" id="searchInput" placeholder="Enter Pokémon name or ID" />
+          <button id="searchBtn">Search</button>
+          <div class="nav-buttons">
+            <button id="prevBtn">⬅ Previous</button>
+            <button id="nextBtn">Next ➡</button>
+          </div>
+        </section>
+
+        <section id="loader" class="loader hidden">Loading...</section>
+
+        <section id="detailView">
+          <div id="pokemonCard"></div>
+        </section>
+        <section id="listView" class="hidden">
+          <h2>All Pokémon</h2>
+          <ol id="pokemonList"></ol>
+        </section>
+
+
+      </main>
+
+      <footer>
+        <p>Powered by <a href="https://pokeapi.co/" target="_blank">PokéAPI</a> & <a
+            href="https://unsplash.com/developers" target="_blank">Unsplash</a></p>
+      </footer>
+    </div>
+  </div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+
 </html>
