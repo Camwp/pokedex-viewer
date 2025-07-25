@@ -144,9 +144,7 @@ button {
     color: #888;
 }
 
-#detailView:hover {
-    transform: scale(1.02);
-}
+
 
 #listView {
     max-width: 900px;
@@ -216,10 +214,11 @@ header {
 
 
 .sidebar {
-    background: #1e1e70;
+    background: #191919;
     padding: 2rem 1rem;
     display: flex;
     gap: 1rem;
+
 
 }
 
@@ -250,6 +249,7 @@ header {
         min-height: 100vh;
         position: sticky;
         top: 0;
+        height: 100vh;
     }
 
     .main-content {
@@ -271,6 +271,7 @@ header {
         /* center items horizontally */
         gap: 1rem;
         border-top: 1px solid #ccc;
+
     }
 
     #navBreak {
