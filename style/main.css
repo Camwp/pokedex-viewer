@@ -59,7 +59,7 @@ button {
 
 .pokedex-container {
     width: 90%;
-    margin: 2rem auto;
+
     background: rgba(255, 255, 255, 0.97);
     padding: 2rem;
     border-radius: 12px;
@@ -78,6 +78,57 @@ button {
     align-items: center;
     gap: 2rem;
     margin-bottom: 2rem;
+}
+
+/*NEW EDIT*/
+.pokedex-container {
+    background-color: #e6ffe6;
+    /* light green background */
+    border: 3px solid #4CAF50;
+    /* medium green border */
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 0 12px rgba(0, 128, 0, 0.2);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 2rem auto;
+}
+
+.pokedex-container h2 {
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.pokedex-container .section {
+    background: #f0fff0;
+    border: 2px solid #a5d6a7;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pokedex-container strong {
+    color: #1b5e20;
+}
+
+/*NEW EDIT*/
+.overview .info-box {
+    border: 1px solid #444;
+    padding: 1rem;
+    flex: 1;
+    /* fills the remaining space */
+    box-sizing: border-box;
+}
+
+.info-box p strong {
+    background-color: #ccc;
+    border-radius: 80px;
+    padding: 5px;
+
+}
+
+.info-box p {
+    margin-top: 10px;
 }
 
 .overview img {
@@ -119,33 +170,56 @@ button {
     height: auto;
 }
 
-
-/* Evolution chain */
+/**/
 .evolution-chain {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background-color: #dff5e1;
+    border: 3px solid #6c6c6c;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1rem;
 }
 
 .evolution-stage {
+    background-color: #dff5e1;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
+    width: 140px;
 }
 
 .evolution-stage img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    background: #fff;
 }
 
-.arrow {
+.evolution-stage p {
+    font-size: 0.8rem;
+    color: #333;
+    margin-top: 0.5rem;
+}
+
+.evolution-stage p {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #111;
+    margin-top: 0.25rem;
+}
+
+.evolution-arrow {
     font-size: 2rem;
-    color: #888;
+    color: #fff;
 }
 
-
-
+/**/
 #listView {
     max-width: 900px;
     max-height: 500px;
@@ -194,6 +268,9 @@ button {
     display: none;
 }
 
+.pokedex-container:hover {
+    transform: scale(1.02);
+}
 
 /* Keep top header */
 header {
@@ -375,4 +452,8 @@ footer {
     padding: 0rem;
     font-size: 0.9rem;
     color: #555;
+}
+
+li {
+    list-style: none;
 }
