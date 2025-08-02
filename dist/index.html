@@ -7,8 +7,8 @@
   <meta name="description" content="Pokémon Pokédex Viewer - browse Pokémon data, stats, and images.">
   <title>Pokémon Pokédex Viewer</title>
   <link rel="icon" href="/assets/images/pokeball.png">
-  <script type="module" crossorigin src="/assets/index-BhMGjTfs.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-C7avqwZ1.css">
+  <script type="module" crossorigin src="/pokedex-viewer/assets/index-BJpkLKJE.js"></script>
+  <link rel="stylesheet" crossorigin href="/pokedex-viewer/assets/index-B1eGxV_X.css">
 </head>
 
 <body>
@@ -21,6 +21,15 @@
       <a href="#" id="homeLink" class="active">Home</a>
       <hr width="100%" id="navBreak">
       <a href="#" id="listLink">All Pokémon</a>
+      <div id="historySection">
+        <div class="history-header">
+          <h3>History</h3>
+          <button id="clearHistoryBtn" title="Clear history">🗑️</button>
+        </div>
+
+        <ul id="historyList"></ul>
+      </div>
+
 
     </nav>
 
@@ -46,12 +55,15 @@
         </section>
 
 
-      </main>
 
+      </main>
       <footer>
-        <p>Powered by <a href="https://pokeapi.co/" target="_blank">PokéAPI</a> & <a
-            href="https://unsplash.com/developers" target="_blank">Unsplash</a></p>
+        <p style="font-size: 0.8rem; color: #ccc; text-align: center bottom;">
+          Powered by <a href="https://pokeapi.co/" target="_blank" style="color:#323232;">PokéAPI</a> &
+          <a href="https://unsplash.com/developers" target="_blank" style="color:#323232;">Unsplash</a>
+        </p>
       </footer>
+
     </div>
   </div>
 </body>
