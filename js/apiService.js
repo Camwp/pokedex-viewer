@@ -127,6 +127,11 @@ export async function loadFullPokemon(nameOrId) {
         return { notFound: true };
     }
 }
+export async function fetchMove(moveName) {
+    const res = await fetch(`https://pokeapi.co/api/v2/move/${moveName.toLowerCase()}`);
+    if (!res.ok) throw new Error('Failed to fetch move data');
+    return res.json();
+}
 
 
 

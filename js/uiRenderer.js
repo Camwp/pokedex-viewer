@@ -1,7 +1,7 @@
 const card = document.getElementById('pokemonCard');
 const loader = document.getElementById('loader');
 const listContainer = document.getElementById('pokemonList');
-import { fetchPokemon } from './apiService.js';
+import { fetchPokemon, fetchMove } from './apiService.js';
 
 const typeColors = {
     normal: '#fffed4ff',
@@ -62,7 +62,9 @@ export async function renderPokemon({ pokemon, species, form, evolution, abiliti
     const secondaryColor = secondaryColors[primaryType] || '#fff';
     const types = pokemon.types.map(t => capitalize(t.type.name)).join(', ');
     const stats = pokemon.stats.map(s => `<tr><td>${capitalize(s.stat.name)}</td><td>${s.base_stat}</td></tr>`).join('');
-    const moves = pokemon.moves.map(m => `<li>${capitalize(m.move.name)}</li>`).join('');
+    const moves = pokemon.moves.map(m => `
+        <li class="clickable-move" data-move="${m.move.name}">${capitalize(m.move.name)}</li>
+      `).join('');
     const heldItems = pokemon.held_items.map(item =>
         `<li><strong style="color: ${secondaryColor}">${capitalize(item.item.name)}</strong>: ${item.version_details.map(v =>
             `${capitalize(v.version.name)} (Rarity: ${v.rarity})`
@@ -89,7 +91,8 @@ export async function renderPokemon({ pokemon, species, form, evolution, abiliti
         `<li><strong style="color: ${secondaryColor}">${capitalize(ab.name)}</strong>: ${ab.effect_entries.find(e => e.language.name === 'en')?.effect || 'No info'}</li>`
     ).join('');
 
-    const evolutionChain = await renderEvolutionChainImages(evolution.chain);
+    const evolutionChain = await renderEvolutionChainImages(evolution.chain, bgColor);
+
 
     card.innerHTML = `
       <div class="pokedex-container" style="background-color: ${bgColor}; border: 3px solid ${secondaryColor};">
@@ -138,28 +141,73 @@ export async function renderPokemon({ pokemon, species, form, evolution, abiliti
 
         ${evolutionChain ? `
         <h3>Evolution Chain</h3>
-        <div class="evolution-chain">${evolutionChain}</div>` : ''}
+        <div class="evolution-chain" style="background-color: ${bgColor}">${evolutionChain}</div>` : ''}
         
         
         
 
         ${cry ? `
+            <div class="cryContainer" style="text-align: center">
         <h3>Pokémon Cry</h3>
         <audio controls id="audioControls">
           <source src="${cry}" type="audio/ogg">
-        </audio>` : ''}
+        </audio>
+        </div>` : ''}
 
+        <div class="spriteContainer" style="text-align: center">
         <h3>Sprites</h3>
-        <div class="sprite-preview">
+        <div class="sprite-preview" style="display: inline-flex">
           ${sprites ? `<div><p>Official</p><img src="${sprites}" /></div>` : ''}
           ${shiny ? `<div><p>Shiny</p><img src="${shiny}" /></div>` : ''}
           ${animated ? `<div><p>Animated</p><img src="${animated}" /></div>` : ''}
         </div>
+        </div>
       </div>
+      <div id="movePopup" class="move-popup hidden"></div>
+
     `;
+    document.querySelectorAll('.clickable-move').forEach(li => {
+        li.addEventListener('click', async (e) => {
+            const moveName = li.dataset.move;
+            const popup = document.getElementById('movePopup');
+
+            try {
+                const move = await fetchMove(moveName);
+                const effectEntry = move.effect_entries.find(e => e.language.name === 'en');
+                const effectText = effectEntry
+                    ? effectEntry.short_effect.replace(/\$effect_chance/g, move.effect_chance)
+                    : 'No description.';
+
+                // Populate popup
+                popup.innerHTML = `
+              <strong>${capitalize(move.name)}</strong><br>
+              <strong>Type:</strong> ${capitalize(move.type.name)}<br>
+              <strong>Power:</strong> ${move.power ?? '—'}<br>
+              <strong>Accuracy:</strong> ${move.accuracy ?? '—'}<br>
+              <strong>PP:</strong> ${move.pp}<br>
+              <strong>Effect:</strong> ${effectText}
+            `;
+
+                // Position popup near clicked element
+                const rect = li.getBoundingClientRect();
+                popup.style.top = `${window.scrollY + rect.top - popup.offsetHeight - 10}px`;
+                popup.style.left = `${window.scrollX + rect.left}px`;
+                popup.classList.remove('hidden');
+            } catch (err) {
+                popup.innerHTML = `<strong>Error loading move.</strong>`;
+                popup.classList.remove('hidden');
+            }
+        });
+    });
+    document.addEventListener('click', (e) => {
+        const popup = document.getElementById('movePopup');
+        if (!e.target.closest('.clickable-move')) {
+            popup.classList.add('hidden');
+        }
+    });
 }
 
-async function renderEvolutionChainImages(chain) {
+async function renderEvolutionChainImages(chain, bgColor) {
     if (!chain) return '';
 
     const stages = [];
@@ -187,7 +235,7 @@ async function renderEvolutionChainImages(chain) {
     await walk(chain); // Start from base
 
     return stages.map((stage, index) => `
-        <div class="evolution-stage">
+        <div class="evolution-stage" style="background-color: ${bgColor}">
             <img src="${stage.img}" alt="${capitalize(stage.name)}" />
             <p>${capitalize(stage.name)}</p>
             ${stage.minLevel !== null ? `<div>Lv. ${stage.minLevel}</div>` : 'Lv. 1'}
@@ -210,6 +258,27 @@ export function renderPokemonList(pokemonArray, loadFullPokemon) {
         listContainer.appendChild(li);
     });
 }
+
+export async function renderMoveDetail(move) {
+    const detailDiv = document.getElementById('moveDetails');
+    if (!detailDiv) return;
+
+    const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+    const effectEntry = move.effect_entries.find(e => e.language.name === 'en');
+    const effectText = effectEntry ? effectEntry.short_effect.replace(/\$effect_chance/g, move.effect_chance) : 'No description.';
+
+    detailDiv.innerHTML = `
+      <h2>${capitalize(move.name)}</h2>
+      <p><strong>Type:</strong> ${capitalize(move.type.name)}</p>
+      <p><strong>Power:</strong> ${move.power ?? '—'}</p>
+      <p><strong>Accuracy:</strong> ${move.accuracy ?? '—'}</p>
+      <p><strong>PP:</strong> ${move.pp}</p>
+      <p><strong>Priority:</strong> ${move.priority}</p>
+      <p><strong>Effect:</strong> ${effectText}</p>
+      <button id="backToPokemon">⬅ Back</button>
+    `;
+}
+
 
 export function renderError(message) {
     card.innerHTML = `<p style="color:red;">${message}</p>`;
