@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const li = document.createElement('li');
             li.textContent = `#${p.id} ${capitalize(p.name)}`;
             li.style.cursor = 'pointer';
-            li.style.listStyle = 'none'
+            li.style.listStyle = 'none';
             li.addEventListener('click', () => {
                 document.getElementById('homeLink').click(); // Simulate clicking "Home"
                 loadPokemon(p.id);

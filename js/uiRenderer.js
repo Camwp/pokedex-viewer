@@ -167,7 +167,7 @@ export async function renderPokemon({ pokemon, species, form, evolution, abiliti
 
     `;
     document.querySelectorAll('.clickable-move').forEach(li => {
-        li.addEventListener('click', async (e) => {
+        li.addEventListener('click', async () => {
             const moveName = li.dataset.move;
             const popup = document.getElementById('movePopup');
 
@@ -234,7 +234,7 @@ async function renderEvolutionChainImages(chain, bgColor) {
 
     await walk(chain); // Start from base
 
-    return stages.map((stage, index) => `
+    return stages.map((stage) => `
         <div class="evolution-stage" style="background-color: ${bgColor}">
             <img src="${stage.img}" alt="${capitalize(stage.name)}" />
             <p>${capitalize(stage.name)}</p>

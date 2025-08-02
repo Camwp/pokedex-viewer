@@ -94,7 +94,7 @@ export async function loadFullPokemon(nameOrId) {
             const fetchedForm = await fetchForm(id);
             if (fetchedForm) form = fetchedForm;
         } catch {
-
+            console.log('catch load full pokemon');
         }
 
         let evolution = {};
@@ -103,6 +103,7 @@ export async function loadFullPokemon(nameOrId) {
                 evolution = await fetchEvolutionChain(species.evolution_chain.url);
             }
         } catch {
+            console.log('catch load full pokemon');
 
         }
 
