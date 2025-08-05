@@ -381,7 +381,9 @@ header {
     display: none;
   }
 
-
+  #pokemonList {
+    column-count: 2;
+  }
 
   .moves-list {
     columns: 2;

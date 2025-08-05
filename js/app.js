@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
+    window.loadPokemon = loadPokemon;
 
     searchBtn.addEventListener('click', () => {
         const query = searchInput.value.trim().toLowerCase();

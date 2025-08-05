@@ -166,6 +166,17 @@ export async function renderPokemon({ pokemon, species, form, evolution, abiliti
       <div id="movePopup" class="move-popup hidden"></div>
 
     `;
+    document.querySelectorAll('.evolution-stage').forEach(el => {
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', () => {
+            const name = el.dataset.name;
+            if (name && window.loadPokemon) {
+                document.getElementById('homeLink')?.click(); // optional if view toggling is needed
+                window.loadPokemon(name); // ✅ this updates history
+            }
+        });
+    });
+
     document.querySelectorAll('.clickable-move').forEach(li => {
         li.addEventListener('click', async () => {
             const moveName = li.dataset.move;
@@ -235,12 +246,14 @@ async function renderEvolutionChainImages(chain, bgColor) {
     await walk(chain); // Start from base
 
     return stages.map((stage) => `
-        <div class="evolution-stage" style="background-color: ${bgColor}">
-            <img src="${stage.img}" alt="${capitalize(stage.name)}" />
-            <p>${capitalize(stage.name)}</p>
-            ${stage.minLevel !== null ? `<div>Lv. ${stage.minLevel}</div>` : 'Lv. 1'}
-        </div>
-    `).join('<span class="arrow">➡</span>');
+    <div class="evolution-stage" data-name="${stage.name}" style="background-color: ${bgColor}">
+        <img src="${stage.img}" alt="${capitalize(stage.name)}" />
+        <p>${capitalize(stage.name)}</p>
+        ${stage.minLevel !== null ? `<div>Lv. ${stage.minLevel}</div>` : 'Lv. 1'}
+    </div>
+`).join('<span class="arrow">➡</span>');
+
+
 }
 
 
