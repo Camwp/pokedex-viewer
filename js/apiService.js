@@ -149,7 +149,7 @@ export async function fetchPokemonList(limit = 1025, offset = 0) {
 
 
 const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
-const ENABLE_UNSPLASH = false;
+const ENABLE_UNSPLASH = true;
 
 export async function fetchBackground() {
     if (ENABLE_UNSPLASH) {
